@@ -1,0 +1,15 @@
+import heapq
+graph = {     "A": {"B": 2, "C": 3},
+    "B": {"A": 2, "D": 3, "E": 2},
+    "C": {"A": 3, "F": 2, "G": 3},
+    "D": {"B": 3, "H": 3},
+    "E": {"B": 2, "H": 4},
+    "F": {"C": 2, "H": 3},
+    "G": {"C": 3, "H": 2},
+    "H": {"D": 3, "E": 4, "F": 3, "G": 2} } h = {"A": 5, "B": 4, "C": 3, "D": 3, "E": 3, "F": 2, "G": 1, "H": 0}
+def astar(start, goal):     pq = [(h[start], 0, start, [start])]     best_g = {start: 0}     while pq:
+        f, g, node, path = heapq.heappop(pq)         if node == goal:             return path, g         if g != best_g.get(node):
+            continue         for nxt, cost in graph[node].items():
+            new_g = g + cost             if new_g < best_g.get(nxt, float("inf")):
+                best_g[nxt] = new_g                 heapq.heappush(pq, (new_g + h[nxt], new_g, nxt, path + [nxt]))     return None, float("inf")
+path, cost = astar("A", "H") print("A* path:", " -> ".join(path)) print("Total cost:", cost)
