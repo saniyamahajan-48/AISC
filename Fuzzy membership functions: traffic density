@@ -1,0 +1,21 @@
+import numpy as np 
+import matplotlib.pyplot as plt
+x = np.linspace(0, 100, 400) 
+def triangular(x, a, b, c):
+    return np.maximum(np.minimum((x-a)/(b-a+1e-9), (c-x)/(c-b+1e-9)), 0) 
+def trapezoidal(x, a, b, c, d):
+    return np.maximum(np.minimum(np.minimum((x-a)/(b-a+1e-9), 1), (d-x)/(d-c+1e-9)), 0) 
+def gaussian(x, mean, sigma):     
+return np.exp(-0.5*((x-mean)/sigma)**2)
+plt.plot(x, trapezoidal(x,0,0,15,35), 
+label="Low (trapezoidal)") 
+plt.plot(x, triangular(x,25,50,75), 
+label="Medium (triangular)") 
+plt.plot(x, gaussian(x,80,12), 
+label="High (Gaussian)") 
+plt.xlabel("Traffic density (%)");
+plt.ylabel("Membership degree") 
+plt.title("Traffic density membership functions") 
+plt.legend(); 
+plt.grid(True); 
+plt.show() 
