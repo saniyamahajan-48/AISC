@@ -1,0 +1,14 @@
+import numpy as np
+X = np.array([[0,0], [0,1], [1,0], [1,1]], dtype=float) y = np.array([0, 0, 0, 1], dtype=float) w = np.zeros(2) b = 0.0 lr = 0.2
+for epoch in range(10000):
+    total_error = 0     for xi, target in zip(X, y):        
+output = 1 / (1 + np.exp(-(np.dot(xi, w) + b)))         
+error = target - output         
+w += lr * error * output * (1-output) * xi        
+b += lr * error * output * (1-output)         
+total_error += error**2     
+if total_error < 0.001:         
+break
+print("Epochs:", epoch + 1) print("Weights:", np.round(w, 3)) 
+print("Bias:", round(b, 3))
+print("Predictions:", [int((1/(1+np.exp(-(np.dot(x,w)+b)))) >= 0.5) for x in X]) 
