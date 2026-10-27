@@ -1,0 +1,20 @@
+import numpy as np 
+import matplotlib.pyplot as plt
+np.random.seed(0) 
+X = np.array([[1,1], [1.2,0.8], [0.8,1.1],
+              [4,4], [4.2,3.8], [3.8,4.1],              
+[8,1], [8.2,0.8], [7.8,1.2]], 
+dtype=float) weights = np.random.rand(3,2)*8 
+for epoch in range(1000):     
+lr = 0.3*(1-epoch/1000)     
+for x in X:
+        bmu = np.argmin(np.linalg.norm(weights-x, axis=1))         
+weights[bmu] += lr*(x-weights[bmu]) 
+labels = [int(np.argmin(np.linalg.norm(weights-x, axis=1))) 
+for x in X] print("Cluster labels:", labels) 
+plt.scatter(X[:,0], X[:,1], c=labels) 
+plt.scatter(weights[:,0], weights[:,1], marker="X", s=180) 
+plt.title("Kohonen SOM clusters") 
+plt.xlabel("Feature 1"); 
+plt.ylabel("Feature 2") 
+plt.show()
