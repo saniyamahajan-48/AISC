@@ -1,0 +1,22 @@
+import numpy as np
+X = np.array([[0,0], [0,1], [1,0], [1,1]], dtype=float) 
+y = np.array([0, 1, 1, 1], dtype=float) 
+w = np.zeros(2) b = 0.0 lr = 0.5
+for epoch in range(10000):
+    total_error = 0     
+for xi, target in zip(X, y):         
+z = np.dot(xi, w) + b         
+output = 1 / (1 + np.exp(-z))         
+error = target - output         
+delta = error * output * (1-output)         
+w += lr * delta * xi         
+b += lr * delta         
+total_error += error**2     
+if total_error < 0.01:         
+break
+pred = [] for xi in X:
+    out = 1/(1+np.exp(-(np.dot(xi,w)+b)))     
+pred.append(int(out >= 0.5)) 
+print("Epochs:", epoch + 1) 
+print("Predictions:", pred)
+print("Targets:    ", y.astype(int).tolist())
