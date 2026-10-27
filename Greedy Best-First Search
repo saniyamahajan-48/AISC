@@ -1,0 +1,7 @@
+import heapq
+graph = {     "A": ["B", "C"], "B": ["D", "E"], "C": ["F", "G"],     "D": ["H"], "E": ["H"], "F": ["H"], "G": ["H"], "H": [] } heuristic = {"A": 6, "B": 4, "C": 3, "D": 2, "E": 3, "F": 2, "G": 1, "H": 0}
+def greedy_best_first(start, goal):
+    pq = [(heuristic[start], start, [start])]     visited = set()
+    while pq:         _, node, path = heapq.heappop(pq)         if node == goal:             return path         if node in visited:             continue         visited.add(node)         for nxt in graph[node]:             if nxt not in visited:
+                heapq.heappush(pq, (heuristic[nxt], nxt, path + [nxt]))     return None
+print("Greedy path:", " -> ".join(greedy_best_first("A", "H")))
