@@ -1,0 +1,22 @@
+import numpy as np
+X = np.array([[0,0], [0,1], [1,0], [1,1]], dtype=float) 
+y = np.array([0, 0, 0, 1], dtype=float)
+def train(lr):     
+w = np.zeros(2)     
+b = 0.0     
+for epoch in range(20000):
+        total_error = 0         
+for xi, target in zip(X, y):
+            out = 1/(1+np.exp(-(np.dot(xi,w)+b)))             
+error = target - out             
+delta = error*out*(1-out)             
+w += lr*delta*xi            
+b += lr*delta             
+total_error += error**2         
+if total_error < 0.001:
+            break     
+preds = [int(1/(1+np.exp(-(np.dot(xi,w)+b))) >= 0.5) for xi in X]     
+return epoch+1, preds
+for rate in [0.1, 0.3, 0.5]:
+    epochs, predictions = train(rate)
+    print(f"Learning rate {rate}: epochs={epochs}, predictions={predictions}") 
